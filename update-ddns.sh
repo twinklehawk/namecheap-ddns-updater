@@ -16,7 +16,7 @@ fi
 
 echo "Checking for IP address changes"
 
-last_ip=$(dig +short "$HOST.$DOMAIN")
+last_ip=$(dig +short "$DDNS_HOST.$DDNS_DOMAIN")
 if [ ! -n "$last_ip" ]; then
   echo "Unable to get last IP address"
   exit 1
@@ -31,8 +31,8 @@ echo "Last IP address: $last_ip"
 echo "New IP address: $public_ip"
 
 if [ "$last_ip" != "$public_ip" ]; then
-  echo "Setting IP for $HOST.$DOMAIN to $public_ip"
-  curl -s -S "https://dynamicdns.park-your-domain.com/update?host=$HOST&domain=$DOMAIN&password=$PASSWORD&ip=$public_ip"
+  echo "Setting IP for $DDNS_HOST.$DDNS_DOMAIN to $public_ip"
+  curl -s -S "https://dynamicdns.park-your-domain.com/update?host=$DDNS_HOST&domain=$DDNS_DOMAIN&password=$DDNS_PASSWORD&ip=$public_ip"
 else
   echo "Skipping update"
 fi
