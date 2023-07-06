@@ -10,8 +10,6 @@ jobs:
       - name: Build docker image
         run: |
           TAG_NAME=${GITHUB_REF#"refs/tags/"}
-          # strip "v" prefix from tag name
-          TAG_NAME=$(echo $TAG_NAME | sed -e 's/^v//')
           docker build -t namecheap-ddns-updater \
             --label="org.opencontainers.image.version=$TAG_NAME" \
             --label="org.opencontainers.image.revision=$GITHUB_SHA" \
