@@ -1,0 +1,28 @@
+name: Deploy release
+on:
+  release:
+    types: [ published ]
+jobs:
+  docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build docker image
+        run: |
+          TAG_NAME=${GITHUB_REF#"refs/tags/"}
+          docker build -t namecheap-ddns-updater \
+            --label="org.opencontainers.image.version=$TAG_NAME" \
+            --label="org.opencontainers.image.revision=$GITHUB_SHA" \
+            --label="org.opencontainers.image.created=$(date +'%Y-%m-%dT%H:%M:%S')" \
+            .
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: Publish docker images
+        run: |
+          TAG_NAME=${GITHUB_REF#"refs/tags/"}
+          # strip "v" prefix from tag name
+          TAG_NAME=$(echo $TAG_NAME | sed -e 's/^v//')
+          docker tag namecheap-ddns-updater ghcr.io/twinklehawk/namecheap-ddns-updater:$TAG_NAME
+          docker tag namecheap-ddns-updater ghcr.io/twinklehawk/namecheap-ddns-updater:latest
+          docker push ghcr.io/twinklehawk/namecheap-ddns-updater:$TAG_NAME
+          docker push ghcr.io/twinklehawk/namecheap-ddns-updater:latest
