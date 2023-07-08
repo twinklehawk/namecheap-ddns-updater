@@ -7,10 +7,9 @@ LABEL org.opencontainers.image.description="Script to update a host's IP address
 LABEL org.opencontainers.image.licenses=Apache-2.0
 
 RUN apk add --no-cache curl bind-tools
+RUN adduser -D -H updater
 
 COPY update-ddns.sh /
 
-RUN groupadd -r updater && useradd --no-log-init -r -g updater updater
 USER updater
-
 ENTRYPOINT ["/update-ddns.sh"]
