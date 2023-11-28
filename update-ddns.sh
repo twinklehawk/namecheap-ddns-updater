@@ -21,7 +21,7 @@ if [ -z "${last_ip:-}" ]; then
   echo "Unable to get last IP address"
   exit 1
 fi
-public_ip=$(curl -s -S https://ifconfig.me/ip)
+public_ip=$(curl -s -S https://api.ipify.org)
 if [ -z "${public_ip:-}" ]; then
   echo "Unable to get current IP address"
   exit 1
