@@ -10,7 +10,12 @@
   "labels": [
     "dependencies"
   ],
+  "schedule": ["* 4-11 * * 0,3,6"],
   "packageRules": [
+    {
+      "matchUpdateTypes": ["patch", "digest"],
+      "automerge": true
+    },
     {
       "matchManagers": ["dockerfile"],
       "pinDigests": false
