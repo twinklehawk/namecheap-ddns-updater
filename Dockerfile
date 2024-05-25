@@ -1,4 +1,4 @@
-FROM alpine:3.19
+FROM alpine:3.20
 
 LABEL org.opencontainers.image.title=namecheap-ddns-updater
 LABEL org.opencontainers.image.url=https://github.com/twinklehawk/namecheap-ddns-updater
