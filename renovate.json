@@ -15,10 +15,6 @@
     {
       "matchUpdateTypes": ["patch", "digest"],
       "automerge": true
-    },
-    {
-      "matchManagers": ["dockerfile"],
-      "pinDigests": false
     }
   ]
 }
